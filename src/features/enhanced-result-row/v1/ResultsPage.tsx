@@ -6,6 +6,7 @@ import Layout from '@/components/core/Layout';
 import BasicInput from '@/components/shared/BasicInput';
 import TabRow from '@/components/shared/TabRow';
 import SearchResultWithKeyPassage from './SearchResultWithKeyPassage';
+import FormResultCard from './FormResultCard';
 
 interface ResultsPageProps {
   searchQuery: string;
@@ -32,12 +33,6 @@ export default function ResultsPage({ searchQuery }: ResultsPageProps) {
       title: "Advanced JavaScript Programming Techniques",
       assetType: "Article" as const,
       snippet: "Master advanced JavaScript concepts including closures, prototypes, async/await, and modern ES6+ features for professional development."
-    },
-    {
-      id: 2, 
-      title: "Employee Onboarding Form",
-      assetType: "Form" as const,
-      snippet: "Complete new employee registration form including personal details, department assignment, and system access requests."
     },
     {
       id: 3,
@@ -88,12 +83,6 @@ export default function ResultsPage({ searchQuery }: ResultsPageProps) {
       snippet: "Comprehensive article explaining common design patterns including Singleton, Observer, and Factory patterns with practical examples."
     },
     {
-      id: 11,
-      title: "Project Budget Request Form",
-      assetType: "Form" as const,
-      snippet: "Submit detailed budget requests for new projects including resource allocation, timeline, and cost justification."
-    },
-    {
       id: 12,
       title: "Mobile App Development Guide",
       assetType: "Guide" as const,
@@ -142,12 +131,6 @@ export default function ResultsPage({ searchQuery }: ResultsPageProps) {
       snippet: "In-depth article covering web performance optimization techniques including lazy loading, code splitting, and CDN implementation."
     },
     {
-      id: 20,
-      title: "Time Off Request Form",
-      assetType: "Form" as const,
-      snippet: "Employee vacation and leave request form with approval workflow and calendar integration for team scheduling."
-    },
-    {
       id: 21,
       title: "Machine Learning Implementation Guide",
       assetType: "Guide" as const,
@@ -179,6 +162,22 @@ export default function ResultsPage({ searchQuery }: ResultsPageProps) {
     }
   ];
 
+  // Sample form data for demonstration
+  const formResults = [
+    {
+      title: 'Employee Onboarding Form',
+      microcopy: 'Register new employees and assign departments.'
+    },
+    {
+      title: 'Project Budget Request',
+      microcopy: 'Submit budget requests for new projects.'
+    },
+    {
+      title: 'Time Off Request',
+      microcopy: 'Request vacation or leave with approval workflow.'
+    }
+  ];
+
   return (
     <Layout variant="results">
       <div className="max-w-4xl mx-auto">
@@ -200,6 +199,16 @@ export default function ResultsPage({ searchQuery }: ResultsPageProps) {
           <p className="text-sm text-gray-600">
             Search results for: <span className="font-medium">&ldquo;{searchQuery}&rdquo;</span> in <span className="font-medium">{activeTab}</span>
           </p>
+        </div>
+
+        {/* Row of FormResultCards above the regular results */}
+        <div className="mb-2">
+          <h2 className="text-lg font-semibold text-gray-900 mb-2">Forms</h2>
+        </div>
+        <div className="flex flex-row gap-4 mb-8 overflow-x-auto pb-2">
+          {formResults.map((form, idx) => (
+            <FormResultCard key={idx} title={form.title} microcopy={form.microcopy} />
+          ))}
         </div>
 
         {/* Regular search results */}
