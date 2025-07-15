@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import type { AssetType, SearchResultProps } from './SearchResult';
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
+import type { SearchResultProps } from './SearchResult';
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
+import { MdOutlineThumbUp, MdOutlineThumbDown } from 'react-icons/md';
 
 interface SearchResultFlipProps extends SearchResultProps {
   devMode?: boolean;
@@ -19,6 +20,7 @@ export default function SearchResultFlip({
   const [trunc, setTrunc] = useState(false);
   const [quotes, setQuotes] = useState(false);
   const [highlight, setHighlight] = useState(false);
+  const [showThumbs, setShowThumbs] = useState(false);
 
   // Helper to render snippet with toggles
   let displaySnippet = snippet;
@@ -52,6 +54,7 @@ export default function SearchResultFlip({
         <DropdownMenuCheckboxItem checked={trunc} onCheckedChange={setTrunc}>Truncate snippet</DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem checked={quotes} onCheckedChange={setQuotes}>Add quotes</DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem checked={highlight} onCheckedChange={setHighlight}>Highlight first 5 words</DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem checked={showThumbs} onCheckedChange={setShowThumbs}>Show thumbs up/down</DropdownMenuCheckboxItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
@@ -64,6 +67,12 @@ export default function SearchResultFlip({
             <span className="font-mono text-xs text-gray-500 mr-1">snippet:</span>
             <span className={`${altView ? 'text-3xl' : 'text-gray-600'} mb-1`}>{snippetNode}</span>
           </div>
+          {showThumbs && (
+            <div className="flex flex-row items-center gap-2 mt-1 mb-1 pt-1 pb-1">
+              <MdOutlineThumbUp size={22} />
+              <MdOutlineThumbDown size={22} />
+            </div>
+          )}
           <div>
             <span className="font-mono text-xs text-gray-500 mr-1">title:</span>
             <span className="text-lg font-medium text-blue-600 hover:underline cursor-pointer mb-1">{title}</span>
@@ -81,6 +90,12 @@ export default function SearchResultFlip({
   return (
     <div key={id} className={`border-b border-gray-200 pb-4 relative ${className}`}>
       <p className={`${altView ? 'text-3xl' : 'text-gray-600'} mb-1`}>{snippetNode}</p>
+      {showThumbs && (
+        <div className="flex flex-row items-center gap-2 mt-1 mb-1 pt-1 pb-1">
+          <MdOutlineThumbUp size={22} />
+          <MdOutlineThumbDown size={22} />
+        </div>
+      )}
       <h3 className="text-lg font-medium text-blue-600 hover:underline cursor-pointer mb-1">
         {title}
       </h3>

@@ -6,7 +6,6 @@ import Layout from '@/components/core/Layout';
 import BasicInput from '@/components/shared/BasicInput';
 import TabRow from '@/components/shared/TabRow';
 import SearchResultWithKeyPassage from './SearchResultWithKeyPassage';
-import FormResultCard from './FormResultCard';
 import SearchResultFlip from '@/components/shared/SearchResultFlip';
 import FormsSection from './FormsSection';
 
@@ -164,22 +163,6 @@ export default function ResultsPage({ searchQuery }: ResultsPageProps) {
     }
   ];
 
-  // Sample form data for demonstration
-  const formResults = [
-    {
-      title: 'Employee Onboarding Form',
-      microcopy: 'Register new employees and assign departments.'
-    },
-    {
-      title: 'Project Budget Request',
-      microcopy: 'Submit budget requests for new projects.'
-    },
-    {
-      title: 'Time Off Request',
-      microcopy: 'Request vacation or leave with approval workflow.'
-    }
-  ];
-
   return (
     <Layout variant="results">
       <div className="max-w-4xl mx-auto">
@@ -225,6 +208,8 @@ export default function ResultsPage({ searchQuery }: ResultsPageProps) {
             devMode={devMode}
             altView={false}
           />
+          {/* FormsSection component right below the second flip component */}
+          <FormsSection />
           {/* Render the next 3 results as before, skipping the first */}
           {searchResults.slice(1, 4).map((result) => (
             <SearchResultWithKeyPassage
@@ -236,8 +221,6 @@ export default function ResultsPage({ searchQuery }: ResultsPageProps) {
               devMode={devMode}
             />
           ))}
-          {/* FormsSection component after the first 4 results */}
-          <FormsSection />
           {/* Render the rest of the results after the form section */}
           {searchResults.slice(4).map((result) => (
             <SearchResultWithKeyPassage
