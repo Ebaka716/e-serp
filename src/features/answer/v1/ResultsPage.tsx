@@ -6,6 +6,7 @@ import Layout from '@/components/core/Layout';
 import BasicInput from '@/components/shared/BasicInput';
 import TabRow from '@/components/shared/TabRow';
 import SearchResultWithKeyPassage from './SearchResultWithKeyPassage';
+import SearchResultFlip from '@/components/shared/SearchResultFlip';
 
 interface ResultsPageProps {
   searchQuery: string;
@@ -208,7 +209,16 @@ export default function ResultsPage({ searchQuery }: ResultsPageProps) {
         {/* Regular search results */}
         <div className="space-y-4">
           <h2 className="text-lg font-semibold text-gray-900">Site assets</h2>
-          {searchResults.map((result) => (
+          {/* Show the first result using SearchResultFlip */}
+          <SearchResultFlip
+            key={searchResults[0].id}
+            id={searchResults[0].id}
+            title={searchResults[0].title}
+            assetType={searchResults[0].assetType}
+            snippet={searchResults[0].snippet}
+          />
+          {/* Render the rest of the results as before, skipping the first */}
+          {searchResults.slice(1).map((result) => (
             <SearchResultWithKeyPassage
               key={result.id}
               id={result.id}

@@ -7,6 +7,8 @@ import BasicInput from '@/components/shared/BasicInput';
 import TabRow from '@/components/shared/TabRow';
 import SearchResultWithKeyPassage from './SearchResultWithKeyPassage';
 import FormResultCard from './FormResultCard';
+import SearchResultFlip from '@/components/shared/SearchResultFlip';
+import FormsSection from './FormsSection';
 
 interface ResultsPageProps {
   searchQuery: string;
@@ -201,20 +203,43 @@ export default function ResultsPage({ searchQuery }: ResultsPageProps) {
           </p>
         </div>
 
-        {/* Row of FormResultCards above the regular results */}
-        <div className="mb-2">
-          <h2 className="text-lg font-semibold text-gray-900 mb-2">Forms</h2>
-        </div>
-        <div className="flex flex-row gap-4 mb-8 overflow-x-auto pb-2">
-          {formResults.map((form, idx) => (
-            <FormResultCard key={idx} title={form.title} microcopy={form.microcopy} />
-          ))}
-        </div>
-
         {/* Regular search results */}
         <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-gray-900">Site assets</h2>
-          {searchResults.map((result) => (
+          {/* Show the first result using SearchResultFlip in alt view */}
+          <SearchResultFlip
+            key={searchResults[0].id + '-alt'}
+            id={searchResults[0].id}
+            title={searchResults[0].title}
+            assetType={searchResults[0].assetType}
+            snippet={searchResults[0].snippet}
+            devMode={devMode}
+            altView={true}
+          />
+          {/* Show the first result using SearchResultFlip in normal view */}
+          <SearchResultFlip
+            key={searchResults[0].id}
+            id={searchResults[0].id}
+            title={searchResults[0].title}
+            assetType={searchResults[0].assetType}
+            snippet={searchResults[0].snippet}
+            devMode={devMode}
+            altView={false}
+          />
+          {/* Render the next 3 results as before, skipping the first */}
+          {searchResults.slice(1, 4).map((result) => (
+            <SearchResultWithKeyPassage
+              key={result.id}
+              id={result.id}
+              title={result.title}
+              assetType={result.assetType}
+              snippet={result.snippet}
+              devMode={devMode}
+            />
+          ))}
+          {/* FormsSection component after the first 4 results */}
+          <FormsSection />
+          {/* Render the rest of the results after the form section */}
+          {searchResults.slice(4).map((result) => (
             <SearchResultWithKeyPassage
               key={result.id}
               id={result.id}
